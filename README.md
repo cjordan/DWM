@@ -1,2 +1,2 @@
 # dwm
-dynamic window manager from suckless.org
+dynamic window manager from suckless.org, with my own customisations.
