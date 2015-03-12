@@ -34,6 +34,7 @@ static const Rule rules[] = {
 	/* { "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 }, */
     { "Qalculate-gtk", NULL,  NULL,       0,            True,        -1 },
     { NULL,       NULL,       "PGPLOT Server", 0,       True,        -1 },
+    { NULL,       NULL,       "Ediff",         0,       True,        -1 },
 };
 
 /* layout(s) */
