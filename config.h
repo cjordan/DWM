@@ -82,6 +82,10 @@ static const char *firefox[]     = { "firefox", NULL };
 static const char *pavucontrol[] = { "pavucontrol", NULL };
 static const char *qalculate[] = { "qalculate-gtk", NULL };
 
+static const char *pulseaudio_ctl_up[]   = { "pulseaudio-ctl", "up", NULL };
+static const char *pulseaudio_ctl_down[] = { "pulseaudio-ctl", "down", NULL };
+static const char *pulseaudio_ctl_mute[] = { "pulseaudio-ctl", "mute", NULL };
+
 static const char *mpc_toggle[]   = { "mpc", "toggle", NULL };
 static const char *mpc_prev[]     = { "mpc", "prev", NULL };
 static const char *mpc_next[]     = { "mpc", "next", NULL };
@@ -104,6 +108,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,      spawn,          {.v = ncmpcpp } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = glances } },
 
+    /* pulseaudio controls - use's greysky's "pulseaudio-ctl" */
+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = pulseaudio_ctl_up } },
+	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = pulseaudio_ctl_down } },
+	{ 0,                            XF86XK_AudioMute,        spawn, {.v = pulseaudio_ctl_mute } },
+
 	/* mpd controls */
 	{ MODKEY|ALTKEY,                XK_Down,   spawn,          {.v = mpc_toggle } },
 	{ MODKEY|ALTKEY,                XK_Left,   spawn,          {.v = mpc_prev } },
@@ -116,7 +125,6 @@ static Key keys[] = {
 	/* wm commands */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
 	{ MODKEY|ShiftMask,             XK_b,      toggleextrabar, {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
