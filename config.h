@@ -1,7 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]            = "-*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*";
+/* static const char font[]            = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"; */
+static const char font[]            = "-*-terminus2-*-*-*-*-12-*-*-*-*-*-*-*";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -85,6 +86,7 @@ static const char *qalculate[] = { "qalculate-gtk", NULL };
 static const char *pulseaudio_ctl_up[]   = { "pulseaudio-ctl", "up", NULL };
 static const char *pulseaudio_ctl_down[] = { "pulseaudio-ctl", "down", NULL };
 static const char *pulseaudio_ctl_mute[] = { "pulseaudio-ctl", "mute", NULL };
+static const char *pulseaudio_ctl_mic_mute[] = { "pulseaudio-ctl", "mute-input", NULL };
 
 static const char *mpc_toggle[]   = { "mpc", "toggle", NULL };
 static const char *mpc_prev[]     = { "mpc", "prev", NULL };
@@ -112,6 +114,7 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = pulseaudio_ctl_up } },
 	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = pulseaudio_ctl_down } },
 	{ 0,                            XF86XK_AudioMute,        spawn, {.v = pulseaudio_ctl_mute } },
+	{ 0,                            XF86XK_AudioMicMute,     spawn, {.v = pulseaudio_ctl_mic_mute } },
 
 	/* mpd controls */
 	{ MODKEY|ALTKEY,                XK_Down,   spawn,          {.v = mpc_toggle } },
