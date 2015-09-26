@@ -1,0 +1,73 @@
+diff --git a/dwm.c b/dwm.c
+index a612dc0..5c50d22 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -185,6 +185,7 @@ static void configure(Client *c);
+ static void configurenotify(XEvent *e);
+ static void configurerequest(XEvent *e);
+ static Monitor *createmon(void);
++static void cycle(const Arg *arg);
+ static void destroynotify(XEvent *e);
+ static void detach(Client *c);
+ static void detachstack(Client *c);
+@@ -235,11 +236,13 @@ static void setfullscreen(Client *c, Bool fullscreen);
+ static void setlayout(const Arg *arg);
+ static void setmfact(const Arg *arg);
+ static void setup(void);
++static int shifttag(int dist);
+ static void showhide(Client *c);
+ static void sigchld(int unused);
+ static void spawn(const Arg *arg);
+ static Monitor *systraytomon(Monitor *m);
+ static void tag(const Arg *arg);
++static void tagcycle(const Arg *arg);
+ static void tagmon(const Arg *arg);
+ static void tile(Monitor *);
+ static void togglebar(const Arg *arg);
+@@ -765,6 +768,13 @@ createmon(void) {
+ }
+ 
+ void
++cycle(const Arg *arg) {
++	const Arg a = { .i = shifttag(arg->i) };
++
++	view(&a);
++}
++
++void
+ destroynotify(XEvent *e) {
+ 	Client *c;
+ 	XDestroyWindowEvent *ev = &e->xdestroywindow;
+@@ -1773,6 +1783,17 @@ setup(void) {
+ 	focus(NULL);
+ }
+ 
++int
++shifttag(int dist) {
++	int seltags = selmon->tagset[selmon->seltags] & TAGMASK;
++
++	if(dist > 0) /* left circular shift */
++		seltags = (seltags << dist) | (seltags >> (LENGTH(tags) - dist));
++	else /* right circular shift */
++		seltags = (seltags >> (- dist)) | (seltags << (LENGTH(tags) + dist));
++	return seltags;
++}
++
+ void
+ showhide(Client *c) {
+ 	if(!c)
+@@ -1837,6 +1858,14 @@ tag(const Arg *arg) {
+ }
+ 
+ void
++tagcycle(const Arg *arg) {
++	const Arg a = { .i = shifttag(arg->i) };
++
++	tag(&a);
++	view(&a);
++}
++
++void
+ tagmon(const Arg *arg) {
+ 	if(!selmon->sel || !mons->next)
+ 		return;
