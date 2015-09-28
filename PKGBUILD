@@ -1,6 +1,10 @@
 pkgname=dwm-git
 _pkgname=dwm
-pkgver=6.1
+pkgver=6.0.43.g14343e6
+pkgver(){
+  cd $_pkgname
+  git describe --tags |sed 's/-/./g'
+}
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
@@ -11,8 +15,11 @@ depends=('libx11' 'libxinerama')
 makedepends=('git')
 provides=('dwm')
 conflicts=('dwm')
-source=(git://git.suckless.org/dwm
+epoch=1
+source=("$_pkgname::git+http://git.suckless.org/dwm"
         dwm.desktop)
+md5sums=('SKIP'
+         '939f403a71b6e85261d09fc3412269ee')
 
 build() {
   cd $srcdir/$_pkgname
@@ -34,5 +41,3 @@ package() {
   install -m644 -D README $pkgdir/usr/share/doc/$pkgname/README
   install -m644 -D $srcdir/dwm.desktop $pkgdir/usr/share/xsessions/dwm.desktop
 }
-md5sums=('SKIP'
-         '939f403a71b6e85261d09fc3412269ee')
