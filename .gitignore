@@ -1,2 +1,4 @@
-*.o
-dwm
+pkg
+src
+dwm*
+!dwm.desktop
