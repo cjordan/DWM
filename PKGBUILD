@@ -17,9 +17,13 @@ provides=('dwm')
 conflicts=('dwm')
 epoch=1
 source=("$_pkgname::git+http://git.suckless.org/dwm"
-        dwm.desktop)
+        dwm.desktop
+        config.h
+        push.c)
 md5sums=('SKIP'
-         '939f403a71b6e85261d09fc3412269ee')
+         '939f403a71b6e85261d09fc3412269ee'
+         'SKIP'
+         '689534c579b1782440ddcaf71537d8fd')
 
 build() {
   cd $srcdir/$_pkgname
@@ -28,9 +32,11 @@ build() {
     echo "=> $p"
     patch < $p || return 1
   done
+  cp ../../push.c .
 
+  cp ../../config.h .
   sed -i 's/CC = cc/CC = clang/g' config.mk
-  sed -i 's/-Os/-O2/g' config.mk
+  sed -i 's/-Os/-O2 -march=native/g' config.mk
   make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
 }
 
