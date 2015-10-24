@@ -40,11 +40,11 @@ prepare() {
     # Tweaking make options
     sed \
         -e 's/CPPFLAGS =/CPPFLAGS +=/g' \
-        -e 's/CFLAGS =/CFLAGS +=/g' \
+        -e 's/CFLAGS   =/CFLAGS   +=/g' \
         -e 's/LDFLAGS =/LDFLAGS +=/g' \
         -e 's/_BSD_SOURCE/_DEFAULT_SOURCE/' \
-        -e 's/-Os/-O2/g' \
-        -e 's/# CC = cc/CC = clang/g' \
+        -e 's/-Os//g' \
+        -e 's/CC = cc/CC = clang/g' \
         -i config.mk
 }
 
