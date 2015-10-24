@@ -1,5 +1,35 @@
---- ../dwm-o/dwm-6.0/dwm.c	2011-12-19 10:02:46.000000000 -0500
-+++ dwm.c	2012-05-16 22:33:00.043394484 -0400
+diff --git a/config.def.h b/config.def.h
+index 77ff358..a355bf0 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,7 +1,7 @@
+ /* See LICENSE file for copyright and license details. */
+ 
+ /* appearance */
+-static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
++static const char font[]            = "monospace-9";
+ static const char normbordercolor[] = "#444444";
+ static const char normbgcolor[]     = "#222222";
+ static const char normfgcolor[]     = "#bbbbbb";
+diff --git a/config.mk b/config.mk
+index 484554a..a09be79 100644
+--- a/config.mk
++++ b/config.mk
+@@ -15,8 +15,8 @@ XINERAMALIBS = -L${X11LIB} -lXinerama
+ XINERAMAFLAGS = -DXINERAMA
+ 
+ # includes and libs
+-INCS = -I. -I/usr/include -I${X11INC}
+-LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 ${XINERAMALIBS}
++INCS = -I. -I/usr/include -I${X11INC} -I/usr/include/freetype2
++LIBS = -L/usr/lib -lc -L${X11LIB} -lX11 ${XINERAMALIBS} -lfontconfig -lXft
+ 
+ # flags
+ CPPFLAGS = -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
+diff --git a/dwm.c b/dwm.c
+index 1d78655..9587e77 100644
+--- a/dwm.c
++++ b/dwm.c
 @@ -39,6 +39,7 @@
  #ifdef XINERAMA
  #include <X11/extensions/Xinerama.h>
@@ -8,7 +38,7 @@
  
  /* macros */
  #define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
-@@ -99,16 +100,15 @@
+@@ -99,16 +100,15 @@ struct Client {
  
  typedef struct {
  	int x, y, w, h;
@@ -28,7 +58,7 @@
  	} font;
  } DC; /* draw context */
  
-@@ -178,15 +178,15 @@
+@@ -178,15 +178,15 @@ static void die(const char *errstr, ...);
  static Monitor *dirtomon(int dir);
  static void drawbar(Monitor *m);
  static void drawbars(void);
@@ -47,7 +77,7 @@
  static Bool getrootptr(int *x, int *y);
  static long getstate(Window w);
  static Bool gettextprop(Window w, Atom atom, char *text, unsigned int size);
-@@ -485,10 +485,6 @@
+@@ -485,10 +485,6 @@ cleanup(void) {
  	for(m = mons; m; m = m->next)
  		while(m->stack)
  			unmanage(m->stack, False);
@@ -58,7 +88,7 @@
  	XUngrabKey(dpy, AnyKey, AnyModifier, root);
  	XFreePixmap(dpy, dc.drawable);
  	XFreeGC(dpy, dc.gc);
-@@ -719,7 +715,7 @@
+@@ -719,7 +715,7 @@ void
  drawbar(Monitor *m) {
  	int x;
  	unsigned int i, occ = 0, urg = 0;
@@ -67,7 +97,7 @@
  	Client *c;
  
  	for(c = m->clients; c; c = c->next) {
-@@ -774,10 +770,10 @@
+@@ -774,10 +770,10 @@ drawbars(void) {
  }
  
  void
@@ -80,7 +110,7 @@
  	x = (dc.font.ascent + dc.font.descent + 2) / 4;
  	if(filled)
  		XFillRectangle(dpy, dc.drawable, dc.gc, dc.x+1, dc.y+1, x+1, x+1);
-@@ -786,11 +782,12 @@
+@@ -786,11 +782,12 @@ drawsquare(Bool filled, Bool empty, Bool invert, unsigned long col[ColLast]) {
  }
  
  void
@@ -95,7 +125,7 @@
  	XFillRectangle(dpy, dc.drawable, dc.gc, dc.x, dc.y, dc.w, dc.h);
  	if(!text)
  		return;
-@@ -805,11 +802,11 @@
+@@ -805,11 +802,11 @@ drawtext(const char *text, unsigned long col[ColLast], Bool invert) {
  	memcpy(buf, text, len);
  	if(len < olen)
  		for(i = len; i && i > len - 3; buf[--i] = '.');
@@ -112,7 +142,7 @@
  }
  
  void
-@@ -855,7 +852,7 @@
+@@ -855,7 +852,7 @@ focus(Client *c) {
  		detachstack(c);
  		attachstack(c);
  		grabbuttons(c, True);
@@ -121,7 +151,7 @@
  		setfocus(c);
  	}
  	else
-@@ -926,14 +923,14 @@
+@@ -926,14 +923,14 @@ getatomprop(Client *c, Atom prop) {
  	return atom;
  }
  
@@ -141,7 +171,7 @@
  }
  
  Bool
-@@ -1034,35 +1031,13 @@
+@@ -1034,35 +1031,13 @@ incnmaster(const Arg *arg) {
  
  void
  initfont(const char *fontstr) {
@@ -183,7 +213,7 @@
  	dc.font.height = dc.font.ascent + dc.font.descent;
  }
  
-@@ -1144,7 +1119,7 @@
+@@ -1144,7 +1119,7 @@ manage(Window w, XWindowAttributes *wa) {
  
  	wc.border_width = c->bw;
  	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
@@ -192,7 +222,7 @@
  	configure(c); /* propagates border_width, if size doesn't change */
  	updatewindowtype(c);
  	updatesizehints(c);
-@@ -1621,8 +1596,6 @@
+@@ -1621,8 +1596,6 @@ setup(void) {
  	dc.drawable = XCreatePixmap(dpy, root, DisplayWidth(dpy, screen), bh, DefaultDepth(dpy, screen));
  	dc.gc = XCreateGC(dpy, root, 0, NULL);
  	XSetLineAttributes(dpy, dc.gc, 1, LineSolid, CapButt, JoinMiter);
@@ -201,7 +231,7 @@
  	/* init bars */
  	updatebars();
  	updatestatus();
-@@ -1692,13 +1665,9 @@
+@@ -1692,13 +1665,9 @@ tagmon(const Arg *arg) {
  
  int
  textnw(const char *text, unsigned int len) {
@@ -218,7 +248,7 @@
  }
  
  void
-@@ -1776,7 +1745,7 @@
+@@ -1776,7 +1745,7 @@ unfocus(Client *c, Bool setfocus) {
  	if(!c)
  		return;
  	grabbuttons(c, False);
