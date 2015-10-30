@@ -9,8 +9,8 @@ index 0107d98..6945489 100644
 -    "Sans:size=10.5",
 -    "VL Gothic:size=10.5",
 -    "WenQuanYi Micro Hei:size=10.5",
-+    "Terminus:size=9",
-+    "xbmicons:size=9"
++    "Terminus:size=12",
++    "xbmicons:size=12"
  };
 -static const char dmenufont[] = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
 -static const char normbordercolor[] = "#444444";

@@ -25,15 +25,15 @@ pkgver(){
 }
 
 prepare() {
-    cd "${srcdir}/${_pkgname}"
+    cd ${srcdir}/${_pkgname}
 
     # Apply patches
-    for p in ../../patches/{0..9}*; do
+    for p in $SRCDEST/patches/{0..9}*; do
         [ -f "${p}" ] || continue
         echo "=> ${p}"
         patch < ${p} || return 1
     done
-    cp ../../push.c .
+    cp $SRCDEST/push.c .
     # Copy the patched config.def.h to config.h
     cp config.def.h config.h
 
