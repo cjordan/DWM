@@ -28,7 +28,7 @@ prepare() {
     cd ${srcdir}/${_pkgname}
 
     # Apply patches
-    for p in $SRCDEST/patches/{0..9}*; do
+    for p in $SRCDEST/patches/{0..9}*.diff; do
         [ -f "${p}" ] || continue
         echo "=> ${p}"
         patch < ${p} || return 1
