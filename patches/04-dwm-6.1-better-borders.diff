@@ -1,13 +1,8 @@
-Author: Eric Pruitt, https://github.com/ericpruitt/
-Description: This patch makes dwm remove borders when only one, non-floating
-window is visible. Additionally, any windows that are the same size as the
-monitor are considered full-screen and their borders removed accordingly.
-
 diff --git a/dwm.c b/dwm.c
-index ffc8864..3ce8ebe 100644
+index 087d3dd..a9fa0b2 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -308,6 +308,34 @@ applyrules(Client *c) {
+@@ -351,6 +351,34 @@ applyrules(Client *c)
  	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
  }
  
@@ -39,26 +34,26 @@ index ffc8864..3ce8ebe 100644
 +	}
 +}
 +
- Bool
- applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact) {
- 	Bool baseismin;
-@@ -376,10 +404,13 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact) {
- 
+ int
+ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
+ {
+@@ -420,10 +448,13 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
  void
- arrange(Monitor *m) {
--	if(m)
+ arrange(Monitor *m)
+ {
+-	if (m)
 +	if(m) {
 +		adjustborders(m);
  		showhide(m->stack);
--	else for(m = mons; m; m = m->next)
+-	else for (m = mons; m; m = m->next)
 +	} else for(m = mons; m; m = m->next) {
 +		adjustborders(m);
  		showhide(m->stack);
-+	}
- 	if(m) {
++    }
+ 	if (m) {
  		arrangemon(m);
  		restack(m);
-@@ -1036,7 +1067,20 @@ manage(Window w, XWindowAttributes *wa) {
+@@ -1197,7 +1228,20 @@ manage(Window w, XWindowAttributes *wa)
  	/* only fix client y-offset, if the client center might cover the bar */
  	c->y = MAX(c->y, ((c->mon->by == c->mon->my) && (c->x + (c->w / 2) >= c->mon->wx)
  	           && (c->x + (c->w / 2) < c->mon->wx + c->mon->ww)) ? bh : c->mon->my);
@@ -80,13 +75,13 @@ index ffc8864..3ce8ebe 100644
  
  	wc.border_width = c->bw;
  	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
-@@ -1933,7 +1977,8 @@ updatewindowtype(Client *c) {
+@@ -2366,7 +2410,8 @@ updatewindowtype(Client *c)
  	Atom state = getatomprop(c, netatom[NetWMState]);
  	Atom wtype = getatomprop(c, netatom[NetWMWindowType]);
  
--	if(state == netatom[NetWMFullscreen])
+-	if (state == netatom[NetWMFullscreen])
 +	if(state == netatom[NetWMFullscreen] ||
 +			(WIDTH(c) == (c->mon->mx + c->mon->mw) && (HEIGHT(c) == (c->mon->my + c->mon->mh))))
- 		setfullscreen(c, True);
- 	if(wtype == netatom[NetWMWindowTypeDialog])
- 		c->isfloating = True;
+ 		setfullscreen(c, 1);
+ 	if (wtype == netatom[NetWMWindowTypeDialog])
+ 		c->isfloating = 1;

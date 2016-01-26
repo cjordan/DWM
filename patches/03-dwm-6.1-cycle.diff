@@ -1,8 +1,8 @@
 diff --git a/dwm.c b/dwm.c
-index a612dc0..5c50d22 100644
+index 17355e1..087d3dd 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -185,6 +185,7 @@ static void configure(Client *c);
+@@ -183,6 +183,7 @@ static void configure(Client *c);
  static void configurenotify(XEvent *e);
  static void configurerequest(XEvent *e);
  static Monitor *createmon(void);
@@ -10,7 +10,7 @@ index a612dc0..5c50d22 100644
  static void destroynotify(XEvent *e);
  static void detach(Client *c);
  static void detachstack(Client *c);
-@@ -235,11 +236,13 @@ static void setfullscreen(Client *c, Bool fullscreen);
+@@ -233,11 +234,13 @@ static void setfullscreen(Client *c, int fullscreen);
  static void setlayout(const Arg *arg);
  static void setmfact(const Arg *arg);
  static void setup(void);
@@ -24,7 +24,7 @@ index a612dc0..5c50d22 100644
  static void tagmon(const Arg *arg);
  static void tile(Monitor *);
  static void togglebar(const Arg *arg);
-@@ -765,6 +768,13 @@ createmon(void) {
+@@ -743,6 +746,13 @@ createmon(void)
  }
  
  void
@@ -35,10 +35,25 @@ index a612dc0..5c50d22 100644
 +}
 +
 +void
- destroynotify(XEvent *e) {
+ destroynotify(XEvent *e)
+ {
  	Client *c;
- 	XDestroyWindowEvent *ev = &e->xdestroywindow;
-@@ -1773,6 +1783,17 @@ setup(void) {
+@@ -758,6 +768,14 @@ destroynotify(XEvent *e)
+ }
+ 
+ void
++tagcycle(const Arg *arg) {
++	const Arg a = { .i = shifttag(arg->i) };
++
++	tag(&a);
++	view(&a);
++}
++
++void
+ detach(Client *c)
+ {
+ 	Client **tc;
+@@ -1788,6 +1806,17 @@ setup(void)
  	focus(NULL);
  }
  
@@ -54,20 +69,5 @@ index a612dc0..5c50d22 100644
 +}
 +
  void
- showhide(Client *c) {
- 	if(!c)
-@@ -1837,6 +1858,14 @@ tag(const Arg *arg) {
- }
- 
- void
-+tagcycle(const Arg *arg) {
-+	const Arg a = { .i = shifttag(arg->i) };
-+
-+	tag(&a);
-+	view(&a);
-+}
-+
-+void
- tagmon(const Arg *arg) {
- 	if(!selmon->sel || !mons->next)
- 		return;
+ showhide(Client *c)
+ {
