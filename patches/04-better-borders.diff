@@ -1,13 +1,8 @@
-Author: Eric Pruitt, https://github.com/ericpruitt/
-Description: This patch makes dwm remove borders when only one, non-floating
-window is visible. Additionally, any windows that are the same size as the
-monitor are considered full-screen and their borders removed accordingly.
-
 diff --git a/dwm.c b/dwm.c
-index 0362114..03fddb6 100644
+index d217a85..d10e955 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -393,9 +393,24 @@ arrange(Monitor *m)
+@@ -434,9 +434,24 @@ arrange(Monitor *m)
  void
  arrangemon(Monitor *m)
  {
@@ -34,7 +29,7 @@ index 0362114..03fddb6 100644
  }
  
  void
-@@ -1117,16 +1132,25 @@ maprequest(XEvent *e)
+@@ -1251,16 +1266,25 @@ maprequest(XEvent *e)
  void
  monocle(Monitor *m)
  {
@@ -64,7 +59,7 @@ index 0362114..03fddb6 100644
  }
  
  void
-@@ -1706,9 +1730,11 @@ togglefloating(const Arg *arg)
+@@ -1947,9 +1971,11 @@ togglefloating(const Arg *arg)
  	if (selmon->sel->isfullscreen) /* no support for fullscreen windows */
  		return;
  	selmon->sel->isfloating = !selmon->sel->isfloating || selmon->sel->isfixed;
@@ -79,7 +74,7 @@ index 0362114..03fddb6 100644
  	arrange(selmon);
  }
  
-@@ -2003,7 +2029,8 @@ updatewindowtype(Client *c)
+@@ -2366,7 +2392,8 @@ updatewindowtype(Client *c)
  	Atom state = getatomprop(c, netatom[NetWMState]);
  	Atom wtype = getatomprop(c, netatom[NetWMWindowType]);
  

@@ -1,5 +1,5 @@
 diff --git a/dwm.c b/dwm.c
-index 17355e1..087d3dd 100644
+index 17355e1..d217a85 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -183,6 +183,7 @@ static void configure(Client *c);
@@ -38,23 +38,8 @@ index 17355e1..087d3dd 100644
  destroynotify(XEvent *e)
  {
  	Client *c;
-@@ -758,6 +768,14 @@ destroynotify(XEvent *e)
- }
- 
- void
-+tagcycle(const Arg *arg) {
-+	const Arg a = { .i = shifttag(arg->i) };
-+
-+	tag(&a);
-+	view(&a);
-+}
-+
-+void
- detach(Client *c)
- {
- 	Client **tc;
-@@ -1788,6 +1806,17 @@ setup(void)
- 	focus(NULL);
+@@ -1591,6 +1601,17 @@ scan(void)
+ 	}
  }
  
 +int
@@ -69,5 +54,20 @@ index 17355e1..087d3dd 100644
 +}
 +
  void
- showhide(Client *c)
+ sendmon(Client *c, Monitor *m)
  {
+@@ -1857,6 +1878,14 @@ tag(const Arg *arg)
+ }
+ 
+ void
++tagcycle(const Arg *arg) {
++	const Arg a = { .i = shifttag(arg->i) };
++
++	tag(&a);
++	view(&a);
++}
++
++void
+ tagmon(const Arg *arg)
+ {
+ 	if (!selmon->sel || !mons->next)

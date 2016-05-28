@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 79b3e8d..ed1cccd 100644
+index 79b3e8d..1ac90fe 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -2,25 +2,30 @@
@@ -214,7 +214,7 @@ index 79b3e8d..ed1cccd 100644
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -104,7 +190,7 @@ static Key keys[] = {
+@@ -104,7 +191,7 @@ static Key keys[] = {
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
@@ -224,7 +224,7 @@ index 79b3e8d..ed1cccd 100644
  
  /* button definitions */
 diff --git a/dwm.c b/dwm.c
-index 44ec109..26137ce 100644
+index 83f09ce..34ac05b 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -51,7 +51,7 @@
@@ -244,7 +244,7 @@ index 44ec109..26137ce 100644
  static void toggletag(const Arg *arg);
  static void toggleview(const Arg *arg);
  static void unfocus(Client *c, int setfocus);
-@@ -2038,6 +2039,16 @@ togglefloating(const Arg *arg)
+@@ -2020,6 +2021,16 @@ togglefloating(const Arg *arg)
  }
  
  void

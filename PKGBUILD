@@ -1,13 +1,13 @@
 pkgname=dwm-git
 _pkgname=dwm
-pkgver=6.1.2.g3465bed
+pkgver=6.1.r2.g3465bed
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
 arch=('i686' 'x86_64' 'armv7h')
 license=('MIT')
 options=(zipman)
-depends=('libx11' 'libxinerama')
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2' 'st' 'dmenu')
 makedepends=('git' 'clang')
 provides=('dwm')
 conflicts=('dwm')
@@ -19,9 +19,9 @@ md5sums=('SKIP'
          '939f403a71b6e85261d09fc3412269ee'
          '689534c579b1782440ddcaf71537d8fd')
 
-pkgver(){
-    cd "${_pkgname}"
-    git describe --tags |sed 's/-/./g'
+pkgver() {
+  cd "${_pkgname}"
+  git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
@@ -50,7 +50,7 @@ prepare() {
 
 build() {
     cd "${srcdir}/${_pkgname}"
-    make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
+    make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
 }
 
 package() {
