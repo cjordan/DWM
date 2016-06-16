@@ -80,7 +80,7 @@ index 79b3e8d..1ac90fe 100644
  
  static const Layout layouts[] = {
  	/* symbol     arrange function */
-@@ -55,46 +65,123 @@ static const Layout layouts[] = {
+@@ -55,46 +65,125 @@ static const Layout layouts[] = {
  };
  
  /* key definitions */
@@ -181,9 +181,11 @@ index 79b3e8d..1ac90fe 100644
 +
 +	/* { MODKEY,                       XK_Tab,    view,           {0} }, */
 +	{ MODKEY,                       XK_Tab,    focusmon,       {.i = +1 } },
-+	{ MODKEY|ShiftMask,             XK_Tab,    tagmon,         {.i = +1 } },
++	{ MODKEY|ShiftMask,             XK_Tab,    focusmon,       {.i = -1 } },
 +	{ MODKEY,                       XK_bracketleft,  tagmon,   {.i = -1 } },
++	{ MODKEY,                       XK_bracketleft,  focusmon, {.i = -1 } },
 +	{ MODKEY,                       XK_bracketright, tagmon,   {.i = +1 } },
++	{ MODKEY,                       XK_bracketright, focusmon, {.i = +1 } },
  	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 +
  	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
