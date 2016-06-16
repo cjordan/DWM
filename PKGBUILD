@@ -28,11 +28,19 @@ prepare() {
     cd ${srcdir}/${_pkgname}
 
     # Apply patches
-    for p in $SRCDEST/patches/{0..9}*.diff; do
+    for p in $SRCDEST/patches/{0..8}*.diff; do
         [ -f "${p}" ] || continue
         echo "=> ${p}"
         patch < ${p} || return 1
     done
+    # Apply personal customisations
+    echo "=> ${SRCDEST}/patches/90-personal.diff"
+    patch < ${SRCDEST}/patches/90-personal.diff || return 1
+    if [[ "$(hostname)" == "betelgeuse" ]]; then
+        echo "=> ${SRCDEST}/patches/91-betelgeuse.diff"
+        patch < ${SRCDEST}/patches/91-betelgeuse.diff || return 1
+    fi
+
     cp $SRCDEST/push.c .
     # Copy the patched config.def.h to config.h
     cp config.def.h config.h

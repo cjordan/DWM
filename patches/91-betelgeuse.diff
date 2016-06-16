@@ -1,0 +1,26 @@
+diff --git a/config.def.h b/config.def.h
+index 1ac90fe..9da792c 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -81,16 +81,16 @@ static const Layout layouts[] = {
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", "#222222", "-nf", "#bbbbbb", "-sb", "#990000", "-sf", "#eeeeee", NULL };
+ 
+-static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
+-static const char *ncmpcpp[]  = { "st", "-e", "ncmpcpp", NULL };
+-static const char *htop[]     = { "st", "-e", "htop", NULL };
+-static const char *glances[]  = { "st", "-e", "glances", NULL };
++static const char *termcmd[]  = { "sakura", "-e", "tmux", NULL };
++static const char *ncmpcpp[]  = { "sakura", "-e", "ncmpcpp", NULL };
++static const char *htop[]     = { "sakura", "-e", "htop", NULL };
++static const char *glances[]  = { "sakura", "-e", "glances", NULL };
+ 
+ static const char *scrot[]    = { "scrot", NULL };
+ static const char *scrot_i[]    = { "scrot", "-s", NULL };
+ static const char *xscreensaver_lock[] = { "xscreensaver-command", "-lock", NULL };
+ 
+-static const char *emacs[]       = { "st", "-e", "emacsclient", "-c", "-a=", NULL };
++static const char *emacs[]       = { "sakura", "-e", "emacsclient", "-c", "-a=", NULL };
+ static const char *spacefm[]     = { "spacefm", NULL };
+ static const char *firefox[]     = { "firefox", NULL };
+ static const char *pavucontrol[] = { "pavucontrol", NULL };
