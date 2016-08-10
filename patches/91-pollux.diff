@@ -1,0 +1,25 @@
+diff --git a/config.def.h b/config.def.h
+index b766dc8..58e259b 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -101,6 +101,9 @@ static const char *pulseaudio_ctl_down[] = { "pulseaudio-ctl", "down", NULL };
+ static const char *pulseaudio_ctl_mute[] = { "pulseaudio-ctl", "mute", NULL };
+ static const char *pulseaudio_ctl_mic_mute[] = { "pulseaudio-ctl", "mute-input", NULL };
+ 
++static const char *brightness_up[] = { "xbacklight", "-inc", "10", NULL };
++static const char *brightness_down[] = { "xbacklight", "-dec", "10", NULL };
++
+ static const char *mpc_toggle[]   = { "mpc", "toggle", NULL };
+ static const char *mpc_prev[]     = { "mpc", "prev", NULL };
+ static const char *mpc_next[]     = { "mpc", "next", NULL };
+@@ -129,6 +132,10 @@ static Key keys[] = {
+ 	{ 0,                            XF86XK_AudioMute,        spawn, {.v = pulseaudio_ctl_mute } },
+ 	{ 0,                            XF86XK_AudioMicMute,     spawn, {.v = pulseaudio_ctl_mic_mute } },
+ 
++    /* xorg-xbacklight */
++	{ 0,                            XF86XK_MonBrightnessUp,   spawn, {.v = brightness_up } },
++	{ 0,                            XF86XK_MonBrightnessDown, spawn, {.v = brightness_down } },
++
+ 	/* mpd controls */
+ 	{ MODKEY|ALTKEY,                XK_Down,   spawn,          {.v = mpc_toggle } },
+ 	{ MODKEY|ALTKEY,                XK_Left,   spawn,          {.v = mpc_prev } },

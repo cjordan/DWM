@@ -36,9 +36,9 @@ prepare() {
     # Apply personal customisations
     echo "=> ${SRCDEST}/patches/90-personal.diff"
     patch < ${SRCDEST}/patches/90-personal.diff || return 1
-    if [[ "$(hostname)" == "betelgeuse" ]]; then
-        echo "=> ${SRCDEST}/patches/91-betelgeuse.diff"
-        patch < ${SRCDEST}/patches/91-betelgeuse.diff || return 1
+    if [[ -f ${SRCDEST}/patches/91-$(hostname).diff ]]; then
+        echo "=> ${SRCDEST}/patches/91-$(hostname).diff"
+        patch < ${SRCDEST}/patches/91-$(hostname).diff || return 1
     fi
 
     cp $SRCDEST/push.c .
