@@ -2,22 +2,38 @@ pkgname=dwm-git
 _pkgname=dwm
 pkgver=6.1.r2.g3465bed
 pkgrel=1
+epoch=2
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
-arch=('i686' 'x86_64' 'armv7h')
-license=('MIT')
+arch=("i686" "x86_64" "armv7h")
+license=("MIT")
 options=(zipman)
-depends=('libx11' 'libxinerama' 'libxft' 'freetype2' 'st' 'dmenu')
-makedepends=('git' 'clang')
-provides=('dwm')
-conflicts=('dwm')
-epoch=2
-source=("$_pkgname::git+http://git.suckless.org/dwm"
-        dwm.desktop
-        push.c)
+depends=("libx11" "libxinerama" "libxft" "freetype2" "st" "dmenu")
+makedepends=("git")
+provides=("dwm")
+conflicts=("dwm")
+source=("git://git.suckless.org/dwm"
+        "dwm.desktop"
+        "push.c"
+        "01-statuscolors.diff"
+        "02-systray.diff"
+        "03-cycle.diff"
+        "04-better-borders.diff"
+        "05-pertag.diff"
+        "90-personal.diff"
+        "91-betelgeuse.diff"
+        "91-pollux.diff")
 md5sums=('SKIP'
          '939f403a71b6e85261d09fc3412269ee'
-         '689534c579b1782440ddcaf71537d8fd')
+         '689534c579b1782440ddcaf71537d8fd'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP')
 
 pkgver() {
   cd "${_pkgname}"
@@ -25,20 +41,21 @@ pkgver() {
 }
 
 prepare() {
-    cd ${srcdir}/${_pkgname}
+    cd "${srcdir}/${_pkgname}"
+    git checkout 3465bed290abc62cb2e69a8096084ba6b8eb4956
 
     # Apply patches
-    for p in $SRCDEST/patches/{0..8}*.diff; do
+    for p in "${srcdir}"/{0..8}*.diff; do
         [ -f "${p}" ] || continue
         echo "=> ${p}"
         patch < ${p} || return 1
     done
     # Apply personal customisations
-    echo "=> ${SRCDEST}/patches/90-personal.diff"
-    patch < ${SRCDEST}/patches/90-personal.diff || return 1
-    if [[ -f ${SRCDEST}/patches/91-$(hostname).diff ]]; then
-        echo "=> ${SRCDEST}/patches/91-$(hostname).diff"
-        patch < ${SRCDEST}/patches/91-$(hostname).diff || return 1
+    echo "=> ${srcdir}/90-personal.diff"
+    patch < "${srcdir}"/90-personal.diff || return 1
+    if [[ -f "${srcdir}"/91-$(hostname).diff ]]; then
+        echo "=> ${srcdir}/91-$(hostname).diff"
+        patch < "${srcdir}"/91-$(hostname).diff || return 1
     fi
 
     cp $SRCDEST/push.c .
@@ -52,7 +69,7 @@ prepare() {
         -e 's/LDFLAGS =/LDFLAGS +=/g' \
         -e 's/_BSD_SOURCE/_DEFAULT_SOURCE/' \
         -e 's/-Os//g' \
-        -e 's/CC = cc/CC = clang/g' \
+        -e 's/CC = cc/CC = gcc/g' \
         -i config.mk
 }
 
