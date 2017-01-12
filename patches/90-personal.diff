@@ -2,13 +2,14 @@ diff --git a/config.def.h b/config.def.h
 index 79b3e8d..1ac90fe 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -2,25 +2,31 @@
+@@ -2,25 +2,32 @@
  
  /* appearance */
  static const char *fonts[] = {
 -	"monospace:size=10"
-+    "Inconsolata:size=10:antialias=true:autohint=true",
-+    "xbmicons:size=9"
++   "Terminus (TTF):pixelsize=12:antialias=true:autohint=true",
++   //"Inconsolata:size=10:antialias=true:autohint=true",
++   "xbmicons:size=9"
  };
 -static const char dmenufont[]       = "monospace:size=10";
 -static const char normbordercolor[] = "#444444";
