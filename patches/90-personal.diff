@@ -19,8 +19,8 @@ index 79b3e8d..1ac90fe 100644
 -static const char selbgcolor[]      = "#005577";
 -static const char selfgcolor[]      = "#eeeeee";
 -#define NUMCOLORS         4
-+//static const char dmenufont[] = "Terminus:size=9";
-+static const char dmenufont[] = "Inconsolata:size=10:antialias=true:autohint=true";
++static const char dmenufont[] = "Terminus (TTF):pixelsize=12:antialias=true:autohint=true";
++//static const char dmenufont[] = "Inconsolata:size=10:antialias=true:autohint=true";
 +#define NUMCOLORS 12
  static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 -  // border   foreground background
