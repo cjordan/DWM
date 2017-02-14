@@ -58,7 +58,7 @@ prepare() {
         patch < "${srcdir}"/91-$(hostname).diff || return 1
     fi
 
-    cp $SRCDEST/push.c .
+    mv "${srcdir}"/push.c .
     # Copy the patched config.def.h to config.h
     cp config.def.h config.h
 

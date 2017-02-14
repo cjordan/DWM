@@ -2,13 +2,12 @@ diff --git a/config.def.h b/config.def.h
 index 79b3e8d..1ac90fe 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -2,25 +2,32 @@
+@@ -2,25 +2,30 @@
  
  /* appearance */
  static const char *fonts[] = {
 -	"monospace:size=10"
 +   "Terminus (TTF):pixelsize=12:antialias=true:autohint=true",
-+   //"Inconsolata:size=10:antialias=true:autohint=true",
 +   "xbmicons:size=9"
  };
 -static const char dmenufont[]       = "monospace:size=10";
@@ -20,7 +19,6 @@ index 79b3e8d..1ac90fe 100644
 -static const char selfgcolor[]      = "#eeeeee";
 -#define NUMCOLORS         4
 +static const char dmenufont[] = "Terminus (TTF):pixelsize=12:antialias=true:autohint=true";
-+//static const char dmenufont[] = "Inconsolata:size=10:antialias=true:autohint=true";
 +#define NUMCOLORS 12
  static const char colors[NUMCOLORS][MAXCOLORS][8] = {
 -  // border   foreground background
